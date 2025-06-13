@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>Õ«”»… «·”⁄—«  «·Õ—«—Ì…</title>
+  <style>
+    body {
+      direction: rtl;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(to bottom, #fefcea, #f1da36);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      background-color: #ffffffd9;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #444;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #f1c40f;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+
+    #results {
+      background-color: #eaf8e3;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Õ«”»… «·”⁄—«  Ê«·„«ﬂ—Ê“</h2>
+
+    <label>«·Ã‰”:</label>
+    <select id="gender">
+      <option value="male">–ﬂ—</option>
+      <option value="female">√‰ÀÏ</option>
+    </select>
+
+    <label>«·⁄„— (”‰…):</label>
+    <input type="number" id="age">
+
+    <label>«·Ê“‰ (ﬂ€):</label>
+    <input type="number" id="weight">
+
+    <label>«·ÿÊ· (”„):</label>
+    <input type="number" id="height">
+
+    <label>„” ÊÏ «·‰‘«ÿ:</label>
+    <select id="activity">
+      <option value="1.2">Œ«„·</option>
+      <option value="1.375">‰‘«ÿ Œ›Ì›</option>
+      <option value="1.55">‰‘«ÿ „ Ê”ÿ</option>
+      <option value="1.725">‰‘«ÿ ⁄«·Ì</option>
+    </select>
+
+    <label>«·Âœ›:</label>
+    <select id="goal">
+      <option value="maintain">«·À»« </option>
+      <option value="loss">Œ”«—…</option>
+      <option value="gain">“Ì«œ…</option>
+    </select>
+
+    <button onclick="calculate()">«Õ”»</button>
+
+    <div id="results"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      const gender = document.getElementById("gender").value;
+      const age = parseFloat(document.getElementById("age").value);
+      const weight = parseFloat(document.getElementById("weight").value);
+      const height = parseFloat(document.getElementById("height").value);
+      const activity = parseFloat(document.getElementById("activity").value);
+      const goal = document.getElementById("goal").value;
+
+      let bmr = gender === "male"
+        ? 10 * weight + 6.25 * height - 5 * age + 5
+        : 10 * weight + 6.25 * height - 5 * age - 161;
+
+      let tdee = bmr * activity;
+
+      if (goal === "loss") tdee -= 500;
+      else if (goal === "gain") tdee += 300;
+
+      let protein = (tdee * 0.3) / 4;
+      let carbs = (tdee * 0.4) / 4;
+      let fats = (tdee * 0.3) / 9;
+
+      document.getElementById("results").innerHTML = `
+        <p><strong>«·”⁄—«  «·ÌÊ„Ì…:</strong> ${tdee.toFixed(0)} Õ—Ì—…</p>
+        <p><strong>«·»—Ê Ì‰:</strong> ${protein.toFixed(1)} €</p>
+        <p><strong>«·ﬂ—»ÊÂÌœ—« :</strong> ${carbs.toFixed(1)} €</p>
+        <p><strong>«·œÂÊ‰:</strong> ${fats.toFixed(1)} €</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
