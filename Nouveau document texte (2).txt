@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>Õ«”»… «·”⁄—«  Ê«·„«ﬂ—Ê“</title>
+</head>
+<body style="direction: rtl; font-family: sans-serif;">
+  <h2>Õ«”»… «·”⁄—«  «·Õ—«—Ì… Ê«·„«ﬂ—Ê“</h2>
+
+  <label>«·Ã‰”:
+    <select id="gender">
+      <option value="male">–ﬂ—</option>
+      <option value="female">√‰ÀÏ</option>
+    </select>
+  </label><br><br>
+
+  <label>«·⁄„— (»«·”‰Ê« ): <input type="number" id="age"></label><br><br>
+  <label>«·Ê“‰ (ﬂ€): <input type="number" id="weight"></label><br><br>
+  <label>«·ÿÊ· (”„): <input type="number" id="height"></label><br><br>
+
+  <label>„” ÊÏ «·‰‘«ÿ:
+    <select id="activity">
+      <option value="1.2">Œ«„·</option>
+      <option value="1.375">‰‘«ÿ Œ›Ì›</option>
+      <option value="1.55">‰‘«ÿ „ Ê”ÿ</option>
+      <option value="1.725">‰‘«ÿ ⁄«·Ì</option>
+    </select>
+  </label><br><br>
+
+  <label>«·Âœ›:
+    <select id="goal">
+      <option value="maintain">«·À»« </option>
+      <option value="loss">Œ”«—… «·Ê“‰</option>
+      <option value="gain">“Ì«œ… «·Ê“‰</option>
+    </select>
+  </label><br><br>
+
+  <button onclick="calculate()">«Õ”»</button>
+
+  <h3>«·‰ «∆Ã:</h3>
+  <div id="results"></div>
+
+  <script>
+    function calculate() {
+      const gender = document.getElementById("gender").value;
+      const age = parseFloat(document.getElementById("age").value);
+      const weight = parseFloat(document.getElementById("weight").value);
+      const height = parseFloat(document.getElementById("height").value);
+      const activity = parseFloat(document.getElementById("activity").value);
+      const goal = document.getElementById("goal").value;
+
+      let bmr = gender === "male"
+        ? 10 * weight + 6.25 * height - 5 * age + 5
+        : 10 * weight + 6.25 * height - 5 * age - 161;
+
+      let tdee = bmr * activity;
+
+      if (goal === "loss") tdee -= 500;
+      else if (goal === "gain") tdee += 300;
+
+      let proteinCal = tdee * 0.3;
+      let carbsCal = tdee * 0.4;
+      let fatCal = tdee * 0.3;
+
+      const results = `
+        <p>«·”⁄—«  «·ÌÊ„Ì… «·„ÿ·Ê»…: <strong>${tdee.toFixed(0)}</strong> ”⁄—…</p>
+        <ul>
+          <li>»—Ê Ì‰: ${(proteinCal / 4).toFixed(1)} €—«„</li>
+          <li>ﬂ—»ÊÂÌœ—« : ${(carbsCal / 4).toFixed(1)} €—«„</li>
+          <li>œÂÊ‰: ${(fatCal / 9).toFixed(1)} €—«„</li>
+        </ul>
+      `;
+      document.getElementById("results").innerHTML = results;
+    }
+  </script>
+</body>
+</html>
